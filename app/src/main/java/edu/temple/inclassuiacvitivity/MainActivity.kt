@@ -15,10 +15,17 @@ class MainActivity : AppCompatActivity() {
         val displayTextView = findViewById<TextView>(R.id.textDisplay)
 
         // Step 1: Populate array
-        val numberArray = IntArray(100)
+        //val numberArray = IntArray(100)
 
-        spinner.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, numberArray.asList())
+        //set text size to a basic number
+        var textNum = 14
+        //change the array to set the values in the spinner
+        val numberArray = (1 until 100).toList().toIntArray()
 
+        for (item in numberArray) {
+            spinner.adapter =
+                ArrayAdapter(this, android.R.layout.simple_list_item_1, numberArray.asList())
+        }
 
         // Step 2: Save selected text size
         spinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
@@ -28,6 +35,8 @@ class MainActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
+                //get item at position from onItemSelected and cast as int
+               textNum = parent!!.getItemAtPosition(position) as Int
 
             }
 
@@ -36,6 +45,9 @@ class MainActivity : AppCompatActivity() {
 
         // Step 3: Change TextView to saved text size
         changeButton.setOnClickListener {
+            //looked online for .setTextSize function
+            displayTextView.setTextSize(textNum.toFloat())
+            //I had to cast to a float to fix a warning, not exactly sure why
 
         }
 
